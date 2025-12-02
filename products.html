@@ -887,7 +887,7 @@
 
                                 <div class="product-bottom d-flex justify-content-between align-items-center mt-3">
                                     <span class="product-price">S/. 18.00</span>
-                                    <button class="btn-add-cart">
+                                    <button href="pruduct.html" class="btn-add-cart">
                                         <i class="fa-solid fa-cart-plus me-1"></i> Añadir
                                     </button>
                                 </div>
@@ -1067,6 +1067,39 @@
             </div>
         </div>
     </section>
+
+    <div class="offcanvas offcanvas-end cart-panel" tabindex="-1" id="cartSidebar">
+        <div class="cart-header px-4 py-3 d-flex justify-content-between align-items-center">
+            <h5 class="fw-bold mb-0">Tu carrito</h5>
+            <button type="button" class="btn-close shadow-none" data-bs-dismiss="offcanvas"></button>
+        </div>
+
+        <div class="cart-body px-4 pt-3">
+            <div id="cartItems"></div>
+        </div>
+
+        <div class="cart-footer px-4 pb-4 pt-3">
+            <div class="d-flex justify-content-between mb-2">
+                <span class="fw-semibold">Subtotal:</span>
+                <span id="cartSubtotal" class="fw-bold text-dark">S/. 0.00</span>
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+                <span class="fw-semibold">Envío:</span>
+                <span class="fw-bold text-dark">S/. 0.00</span>
+            </div>
+
+            <hr class="my-3">
+
+            <div class="d-flex justify-content-between mb-3">
+                <span class="fw-semibold fs-5">Total:</span>
+                <span id="cartTotal" class="fw-bold fs-5 text-success">S/. 0.00</span>
+            </div>
+
+            <button class="btn checkout-btn w-100 py-3 fw-bold">
+                Ir a pagar
+            </button>
+        </div>
+    </div>
 
     <!-- ===================== FOOTER PROFESIONAL ===================== -->
     <footer class="footer-section mt-5 pt-5 pb-4">
