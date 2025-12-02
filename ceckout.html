@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fruitables</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: proximity;
+        }
+
+        body {
+            overscroll-behavior: contain;
+            scroll-behavior: smooth;
+        }
+
+        html,
+        body {
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* ===================== TOPBAR ===================== */
+        .topbar {
+            background-color: #7ec400;
+            padding: 10px 0;
+            color: #fff;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .topbar.hide {
+            opacity: 0;
+            transform: translateY(-20px);
+            pointer-events: none;
+        }
+
+        .topbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* ===== REDES SOCIALES TOPBAR ===== */
+        .social-icons a {
+            width: 32px;
+            height: 32px;
+            margin-left: 10px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none !important;
+            background: rgba(255, 255, 255, 0.25);
+            color: #fff;
+            font-size: 16px;
+            backdrop-filter: blur(4px);
+            transition: all 0.3s ease;
+        }
+
+        .social:hover {
+            transform: translateY(-2px) scale(1.1);
+        }
+
+        .social.ig:hover {
+            background: linear-gradient(45deg,
+                    #feda75,
+                    #fa7e1e,
+                    #d62976,
+                    #962fbf,
+                    #4f5bd5);
+        }
+
+        .social.fb:hover {
+            background: #1877f2;
+        }
+
+        .social.tk:hover {
+            background: #000;
+            box-shadow: 0 0 8px 2px rgba(0, 255, 255, 0.4);
+        }
+
+        .social.wa:hover {
+            background: #25d366;
+        }
+
+        .social i {
+            transition: transform 0.3s ease;
+        }
+
+        .social:hover i {
+            transform: scale(1.2);
+        }
+
+        /* ===================== LOGO ===================== */
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            color: #7ec400;
+            display: inline-block;
+            transition: color 0.3s ease;
+        }
+
+        .logo:hover {
+            background: linear-gradient(90deg, #7ec400, #ffa500, #ff4d4d);
+            background-size: 200%;
+            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            animation: gradientFlow 1s ease forwards;
+        }
+
+        @keyframes gradientFlow {
+            0% {
+                background-position: 0%;
+            }
+
+            100% {
+                background-position: 100%;
+            }
+        }
+
+        /* ===================== NAVBAR ===================== */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            background-color: #fff;
+        }
+
+        .navbar.sticky-shadow {
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+        }
+
+        .navbar-nav .nav-link {
+            position: relative;
+            font-weight: 500;
+            padding: 10px 16px !important;
+            transition: all 0.25s ease;
+            color: #444 !important;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #7ec400 !important;
+            background: rgba(126, 196, 0, 0.12);
+            border-radius: 6px;
+            transform: translateY(-1px);
+        }
+
+        .navbar-nav .nav-link::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 4px;
+            width: 0;
+            height: 2px;
+            background: #7ec400;
+            transition: all 0.3s ease;
+            border-radius: 10px;
+            transform: translateX(-50%);
+        }
+
+        .navbar-nav .nav-link:hover::after,
+        .navbar-nav .nav-link.active::after {
+            width: 50%;
+        }
+
+        .navbar-nav .nav-link.active {
+            color: #7ec400 !important;
+            font-weight: 600;
+        }
+
+        /* ===================== DROPDOWN ===================== */
+        .navbar-nav .dropdown-toggle i {
+            font-size: 14px;
+            margin-left: 6px;
+            color: #444;
+            transition: transform 0.25s ease, color 0.25s ease;
+        }
+
+        .nav-item.dropdown .nav-link::after {
+            display: none !important;
+        }
+
+        .navbar-nav .dropdown-toggle:hover i,
+        .navbar-nav .dropdown-toggle.active i {
+            color: #7ec400;
+        }
+
+        .dropdown-menu,
+        .dropdown-menu li {
+            list-style: none !important;
+        }
+
+        .dropdown-menu {
+            opacity: 0;
+            transform: translateY(10px) scale(0.95);
+            pointer-events: none;
+            border-radius: 10px;
+            display: block !important;
+        }
+
+        .dropdown-menu.opening {
+            animation: dropdownOpen 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .dropdown-menu.closing {
+            animation: dropdownClose 0.18s ease forwards;
+        }
+
+        @keyframes dropdownOpen {
+            0% {
+                opacity: 0;
+                transform: translateY(10px) scale(0.95);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                pointer-events: auto;
+            }
+        }
+
+        @keyframes dropdownClose {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-5px) scale(0.97);
+                pointer-events: none;
+            }
+        }
+
+        .dropdown-menu .dropdown-item {
+            border-radius: 6px;
+            padding: 10px 14px;
+            transition: all 0.25s ease;
+            color: #444;
+        }
+
+        .dropdown-menu .dropdown-item:hover {
+            background: rgba(126, 196, 0, 0.15);
+            color: #7ec400;
+            transform: translateX(4px);
+        }
+
+        .dropdown-menu .dropdown-item:active {
+            background: rgba(126, 196, 0, 0.2);
+            color: #7ec400;
+        }
+
+        /* ===================== BUSCADOR ===================== */
+        .search-container {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .search-input {
+            width: 0;
+            opacity: 0;
+            padding: 5px 12px;
+            margin-left: 10px;
+            border: 2px solid #ffa500;
+            border-radius: 8px;
+            outline: none;
+            transition: 0.4s ease;
+            font-size: 15px;
+        }
+
+        .search-input.show {
+            width: 180px;
+            opacity: 1;
+        }
+
+        /* ===================== ICONOS DERECHA ===================== */
+        .icon-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 2px solid #ffa500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffa500;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .cart {
+            background-color: #7ec400;
+            border-radius: 6px;
+            padding: 6px 12px;
+            color: #fff;
+            font-size: 18px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart span {
+            position: absolute;
+            top: -7px;
+            right: -7px;
+            background: #ffa600;
+            color: #fff;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .user-icon {
+            font-size: 22px;
+            color: #7ec400;
+            cursor: pointer;
+        }
+
+        /* ============================================================
+   ESTILO CHECKOUT – PREMIUM E-COMMERCE DESIGN
+   ============================================================ */
+
+        body {
+            background: #f3f5f7;
+            font-family: "Inter", "Segoe UI", sans-serif;
+        }
+
+        /* ========= WRAPPER ========= */
+        .checkout-container {
+            max-width: 1150px;
+            margin: 45px auto;
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 50px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e9ecef;
+        }
+
+        /* ========= HEADER ========= */
+        .checkout-title {
+            font-size: 34px;
+            font-weight: 800;
+            color: #222;
+            letter-spacing: -0.5px;
+            margin-bottom: 25px;
+        }
+
+        /* ========= PASOS DEL CHECKOUT ========= */
+        .step-indicator {
+            display: flex;
+            gap: 35px;
+            padding: 15px 0 25px;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #888;
+            transition: .25s;
+        }
+
+        .step-item.active {
+            color: #7ec400;
+            transform: translateY(-1px);
+        }
+
+        .step-dot {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #e4e4e4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 700;
+            transition: .25s;
+        }
+
+        .step-item.active .step-dot {
+            background: #7ec400;
+            color: white;
+            box-shadow: 0 4px 12px rgba(126, 196, 0, 0.4);
+        }
+
+        /* ========= FORMULARIO ========= */
+        .form-label {
+            font-weight: 700;
+            font-size: 14.5px;
+            color: #333;
+        }
+
+        .form-control,
+        .form-select {
+            padding: 14px;
+            border-radius: 12px;
+            border: 2px solid #e8e8e8;
+            transition: .25s;
+            background: #fafafa;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #7ec400 !important;
+            box-shadow: 0 0 0 3px rgba(126, 196, 0, 0.15);
+            background: #fff;
+        }
+
+        /* ========= MODO DE ENVÍO (Delivery / Pickup) ========= */
+        .shipping-option {
+            flex: 1;
+            text-align: center;
+            border: 2px solid #ddd;
+            border-radius: 14px;
+            padding: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .25s ease;
+            background: #fafafa;
+        }
+
+        .shipping-option:hover {
+            border-color: #7ec400;
+            transform: translateY(-2px);
+        }
+
+        .shipping-option.active {
+            background: rgba(126, 196, 0, 0.1);
+            border-color: #7ec400;
+            color: #7ec400;
+            box-shadow: 0 4px 12px rgba(126, 196, 0, 0.25);
+        }
+
+        /* ========= RESUMEN DEL CARRITO ========= */
+        .summary-card {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 18px;
+            border: 1px solid #e2e2e2;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.05);
+        }
+
+        .summary-product {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-product:last-child {
+            border-bottom: none;
+        }
+
+        .summary-product img {
+            width: 70px;
+            height: 70px;
+            border-radius: 14px;
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, .1);
+        }
+
+        .summary-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+
+        .summary-product small {
+            opacity: 0.7;
+        }
+
+        /* ========= TOTAL ========= */
+        .total-box {
+            background: #f9f9f9;
+            padding: 18px;
+            border-radius: 14px;
+            margin-top: 12px;
+            border: 1px solid #eee;
+        }
+
+        /* ========= BOTÓN PAGAR ========= */
+        .pay-btn {
+            background: #7ec400;
+            color: #fff;
+            width: 100%;
+            padding: 15px;
+            font-size: 17px;
+            border-radius: 14px;
+            border: none;
+            transition: .25s;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .pay-btn:hover {
+            background: #6ab000;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(126, 196, 0, .3);
+        }
+
+        /* ========= TEXTO SEGURO ========= */
+        .secure-text {
+            font-size: 13.5px;
+            color: #666;
+            margin-top: 15px;
+            line-height: 1.5;
+        }
+
+        .secure-text i {
+            color: #7ec400;
+            margin-right: 6px;
+        }
+
+        /* ========= MEDIA QUERIES ========= */
+        @media (max-width: 768px) {
+            .checkout-container {
+                padding: 25px;
+                margin-top: 20px;
+            }
+
+            .shipping-option {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+
+
+        /* ===================== FOOTER ===================== */
+
+        .footer-section {
+            background: #f5f5f5;
+            border-top: 4px solid #7ec400;
+        }
+
+        .footer-logo {
+            font-size: 32px;
+            font-weight: 700;
+            color: #7ec400;
+        }
+
+        .footer-text {
+            color: #555;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .footer-social a {
+            width: 38px;
+            height: 38px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background: #7ec400;
+            color: #fff;
+            margin-right: 10px;
+            font-size: 16px;
+            transition: .3s ease;
+            text-decoration: none;
+        }
+
+        .footer-social a:hover {
+            background: #5d9600;
+            transform: translateY(-3px);
+        }
+
+        .footer-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #222;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links li a {
+            text-decoration: none;
+            color: #555;
+            font-size: 15px;
+            transition: .25s ease;
+        }
+
+        .footer-links li a:hover {
+            color: #7ec400;
+            padding-left: 4px;
+        }
+
+        .footer-contact {
+            color: #555;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .footer-contact i {
+            color: #7ec400;
+            margin-right: 8px;
+        }
+
+        .footer-form {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-input {
+            flex: 1;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            outline: none;
+            font-size: 15px;
+        }
+
+        .footer-btn {
+            background: #7ec400;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .3s ease;
+        }
+
+        .footer-btn:hover {
+            background: #5d9600;
+        }
+
+        .footer-divider {
+            margin-top: 30px;
+            border-color: #ccc;
+        }
+
+        .footer-copy {
+            color: #777;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ===================== TOPBAR ===================== -->
+    <div class="container-fluid topbar">
+        <div class="container d-flex justify-content-between">
+            <div>
+                <i class="fa-solid fa-location-dot me-1"></i> Avenida AgendasPeru
+                <i class="fa-solid fa-envelope ms-3 me-1"></i> camiept56@gmail.com
+            </div>
+
+            <div class="social-icons d-flex">
+                <a href="#" class="social fb"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="social ig"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="social tk"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="#" class="social wa"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== NAVBAR ===================== -->
+    <nav class="navbar navbar-expand-lg bg-white py-3">
+        <div class="container">
+            <a class="navbar-brand logo" href="#">Agendas Perú</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Inicio</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="pagesDropdown">
+                            Tienda <i class="fa-solid fa-chevron-down"></i>
+                        </a>
+
+                        <ul class="dropdown-menu p-2">
+                            <li><a class="dropdown-item" href="#">Libretas</a></li>
+                            <li><a class="dropdown-item" href="#">Cuadernos</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item"><a class="nav-link" href="#">Contacto</a></li>
+                </ul>
+
+                <!-- ICONOS DERECHA -->
+                <div class="d-flex align-items-center">
+                    <!-- BUSCADOR -->
+                    <div class="search-container">
+                        <div class="icon-btn" id="btnSearch">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                        <input type="text" id="searchInput" class="search-input" placeholder="Buscar..." />
+                    </div>
+
+                    <!-- CARRITO -->
+                    <div class="cart">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span>3</span>
+                    </div>
+
+                    <!-- USUARIO -->
+                    <i class="fa-solid fa-user user-icon ms-3"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===================== CONTENEDOR CHECKOUT ===================== -->
+    <div class="checkout-container">
+
+        <h2 class="checkout-title mb-4">Checkout</h2>
+
+        <!-- PASOS -->
+        <div class="step-indicator mb-4">
+            <div class="step-item">
+                <span class="step-dot">1</span> Carrito
+            </div>
+            <div class="step-item">
+                <span class="step-dot">2</span> Revisión
+            </div>
+            <div class="step-item active">
+                <span class="step-dot">3</span> Checkout
+            </div>
+        </div>
+
+        <div class="row g-5">
+
+            <!-- ===================== FORMULARIO ===================== -->
+            <div class="col-lg-7">
+
+                <h5 class="fw-bold mb-3">Información de Envío</h5>
+
+                <!-- Opciones de envío -->
+                <div class="d-flex gap-3 mb-4">
+                    <div id="optDelivery" class="shipping-option active">
+                        <i class="fa-solid fa-truck me-2"></i> Delivery
+                    </div>
+                    <div id="optPickup" class="shipping-option">
+                        <i class="fa-solid fa-shop me-2"></i> Recojo
+                    </div>
+                </div>
+
+                <form>
+
+                    <label class="form-label">Nombre completo *</label>
+                    <input type="text" class="form-control mb-3" required>
+
+                    <label class="form-label">Correo electrónico *</label>
+                    <input type="email" class="form-control mb-3" required>
+
+                    <label class="form-label">Número de teléfono *</label>
+                    <input type="text" class="form-control mb-3" required>
+
+                    <label class="form-label">Distrito *</label>
+                    <input type="text" class="form-control mb-3">
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label class="form-label">Ciudad *</label>
+                            <input type="text" class="form-control mb-3">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Provincia *</label>
+                            <input type="text" class="form-control mb-3">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">Código Postal *</label>
+                            <input type="text" class="form-control mb-3">
+                        </div>
+                    </div>
+
+                    <div class="form-check mt-2 mb-4">
+                        <input class="form-check-input" type="checkbox" id="termsCheck">
+                        <label class="form-check-label" for="termsCheck">
+                            Acepto los términos y condiciones.
+                        </label>
+                    </div>
+
+                </form>
+
+            </div>
+
+            <!-- ===================== RESUMEN DEL CARRITO ===================== -->
+            <div class="col-lg-5">
+                <div class="summary-card">
+
+                    <h5 class="fw-bold mb-3">Revisa tu pedido</h5>
+
+                    <div id="checkoutProducts"></div>
+
+                    <hr>
+
+                    <div class="d-flex justify-content-between">
+                        <span>Subtotal</span>
+                        <span id="checkoutSubtotal">S/. 0.00</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <span>Envío</span>
+                        <span>S/. 0.00</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between fw-bold fs-5 mt-2 mb-3">
+                        <span>Total</span>
+                        <span id="checkoutTotal">S/. 0.00</span>
+                    </div>
+
+                    <button class="pay-btn">Pagar ahora</button>
+
+                    <p class="secure-text mt-3">
+                        <i class="fa-solid fa-lock me-1"></i> Pago seguro – Tus datos están protegidos.
+                    </p>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- ===================== FOOTER PROFESIONAL ===================== -->
+    <footer class="footer-section mt-5 pt-5 pb-4">
+        <div class="container">
+
+            <div class="row g-4">
+
+                <!-- LOGO + DESCRIPCIÓN -->
+                <div class="col-lg-4 col-md-6">
+                    <h3 class="footer-logo">Agendas Perú</h3>
+                    <p class="footer-text mt-3">
+                        En AgendasPeru creamos agendas, libretas y planners premium diseñados para acompañarte en tu día
+                        a día. Calidad, diseño y organización en un solo lugar.
+                    </p>
+
+                    <!-- Redes Sociales -->
+                    <div class="footer-social mt-3">
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <!-- ENLACES RÁPIDOS -->
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-title">Enlaces</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="#">Tienda</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <!-- INFORMACIÓN -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-title">Contáctanos</h5>
+
+                    <p class="footer-contact">
+                        <i class="fa-solid fa-location-dot"></i>
+                        Avenida AgendasPeru
+                    </p>
+
+                    <p class="footer-contact">
+                        <i class="fa-solid fa-phone"></i>
+                        +51 976 823 381
+                    </p>
+
+                    <p class="footer-contact">
+                        <i class="fa-solid fa-envelope"></i>
+                        icamiept56@gmail.com
+                    </p>
+                </div>
+
+                <!-- SUSCRIPCIÓN -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-title">Suscríbete</h5>
+
+                    <p class="footer-text">
+                        Recibe promociones, ofertas y novedades directamente en tu correo.
+                    </p>
+
+                    <form class="footer-form mt-3">
+                        <input type="email" class="footer-input" placeholder="Tu correo" />
+                        <button class="footer-btn">Enviar</button>
+                    </form>
+                </div>
+
+            </div>
+
+            <hr class="footer-divider" />
+
+            <div class="text-center mt-3 footer-copy">
+                © 2024 Agendas Perú — Todos los derechos reservados | Pagina creada con fines educativos.
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        /* ===================== TOPBAR + NAVBAR STICKY ===================== */
+
+        const topbar = document.querySelector(".topbar");
+        const navbar = document.querySelector(".navbar");
+
+        window.addEventListener("scroll", () => {
+            let scrollY = window.scrollY;
+
+            if (scrollY > 80) {
+                topbar.classList.add("hide"); // Oculta la topbar
+                navbar.classList.add("sticky-shadow"); // Sombra navbar
+            } else {
+                topbar.classList.remove("hide");
+                navbar.classList.remove("sticky-shadow");
+            }
+        });
+
+        /* ===================== DROPDOWN CUSTOM ANIMADO ===================== */
+
+        const toggle = document.querySelector(".dropdown-toggle");
+        const menu = document.querySelector(".dropdown-menu");
+        let isOpen = false;
+
+        toggle.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            isOpen ? closeMenu() : openMenu();
+        });
+
+        function openMenu() {
+            isOpen = true;
+            menu.classList.remove("closing");
+            menu.classList.add("opening");
+        }
+
+        function closeMenu() {
+            isOpen = false;
+            menu.classList.remove("opening");
+            menu.classList.add("closing");
+        }
+
+        document.addEventListener("click", function (e) {
+            if (isOpen && !menu.contains(e.target) && !toggle.contains(e.target)) {
+                closeMenu();
+            }
+        });
+
+        /* ===================== BUSCADOR ANIMADO ===================== */
+
+        const btnSearch = document.getElementById("btnSearch");
+        const searchInput = document.getElementById("searchInput");
+
+        btnSearch.addEventListener("click", (e) => {
+            e.stopPropagation();
+            searchInput.classList.toggle("show");
+
+            if (searchInput.classList.contains("show")) searchInput.focus();
+        });
+
+        document.addEventListener("click", () => {
+            searchInput.classList.remove("show");
+        });
+
+        let cart = JSON.parse(localStorage.getItem("cartData") || "[]");
+
+        const checkoutProducts = document.getElementById("checkoutProducts");
+        const checkoutSubtotal = document.getElementById("checkoutSubtotal");
+        const checkoutTotal = document.getElementById("checkoutTotal");
+
+        function loadCheckout() {
+            let subtotal = 0;
+            checkoutProducts.innerHTML = "";
+
+            cart.forEach(item => {
+                subtotal += item.price * item.qty;
+
+                checkoutProducts.innerHTML += `
+                    <div class="summary-product">
+                        <img src="${item.img}">
+                        <div>
+                            <div class="summary-title">${item.name}</div>
+                            <small>${item.qty}x</small><br>
+                            <strong>S/. ${item.price.toFixed(2)}</strong>
+                        </div>
+                    </div>
+                `;
+            });
+
+            checkoutSubtotal.textContent = "S/. " + subtotal.toFixed(2);
+            checkoutTotal.textContent = "S/. " + subtotal.toFixed(2);
+        }
+
+        loadCheckout();
+
+
+        /* =====================================
+           OPCIONES DE ENVÍO
+        ===================================== */
+
+        document.getElementById("optDelivery").onclick = () => {
+            optDelivery.classList.add("active");
+            optPickup.classList.remove("active");
+        };
+
+        document.getElementById("optPickup").onclick = () => {
+            optPickup.classList.add("active");
+            optDelivery.classList.remove("active");
+        };
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fruitables</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: proximity;
+        }
+
+        body {
+            overscroll-behavior: contain;
+            scroll-behavior: smooth;
+        }
+
+        html,
+        body {
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* ===================== TOPBAR ===================== */
+        .topbar {
+            background-color: #7ec400;
+            padding: 10px 0;
+            color: #fff;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .topbar.hide {
+            opacity: 0;
+            transform: translateY(-20px);
+            pointer-events: none;
+        }
+
+        .topbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* ===== REDES SOCIALES TOPBAR ===== */
+        .social-icons a {
+            width: 32px;
+            height: 32px;
+            margin-left: 10px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none !important;
+            background: rgba(255, 255, 255, 0.25);
+            color: #fff;
+            font-size: 16px;
+            backdrop-filter: blur(4px);
+            transition: all 0.3s ease;
+        }
+
+        .social:hover {
+            transform: translateY(-2px) scale(1.1);
+        }
+
+        .social.ig:hover {
+            background: linear-gradient(45deg,
+                    #feda75,
+                    #fa7e1e,
+                    #d62976,
+                    #962fbf,
+                    #4f5bd5);
+        }
+
+        .social.fb:hover {
+            background: #1877f2;
+        }
+
+        .social.tk:hover {
+            background: #000;
+            box-shadow: 0 0 8px 2px rgba(0, 255, 255, 0.4);
+        }
+
+        .social.wa:hover {
+            background: #25d366;
+        }
+
+        .social i {
+            transition: transform 0.3s ease;
+        }
+
+        .social:hover i {
+            transform: scale(1.2);
+        }
+
+        /* ===================== LOGO ===================== */
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            color: #7ec400;
+            display: inline-block;
+            transition: color 0.3s ease;
+        }
+
+        .logo:hover {
+            background: linear-gradient(90deg, #7ec400, #ffa500, #ff4d4d);
+            background-size: 200%;
+            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text;
+            animation: gradientFlow 1s ease forwards;
+        }
+
+        @keyframes gradientFlow {
+            0% {
+                background-position: 0%;
+            }
+
+            100% {
+                background-position: 100%;
+            }
+        }
+
+        /* ===================== NAVBAR ===================== */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            background-color: #fff;
+        }
+
+        .navbar.sticky-shadow {
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+        }
+
+        .navbar-nav .nav-link {
+            position: relative;
+            font-weight: 500;
+            padding: 10px 16px !important;
+            transition: all 0.25s ease;
+            color: #444 !important;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #7ec400 !important;
+            background: rgba(126, 196, 0, 0.12);
+            border-radius: 6px;
+            transform: translateY(-1px);
+        }
+
+        .navbar-nav .nav-link::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 4px;
+            width: 0;
+            height: 2px;
+            background: #7ec400;
+            transition: all 0.3s ease;
+            border-radius: 10px;
+            transform: translateX(-50%);
+        }
+
+        .navbar-nav .nav-link:hover::after,
+        .navbar-nav .nav-link.active::after {
+            width: 50%;
+        }
+
+        .navbar-nav .nav-link.active {
+            color: #7ec400 !important;
+            font-weight: 600;
+        }
+
+        /* ===================== DROPDOWN ===================== */
+        .navbar-nav .dropdown-toggle i {
+            font-size: 14px;
+            margin-left: 6px;
+            color: #444;
+            transition: transform 0.25s ease, color 0.25s ease;
+        }
+
+        .nav-item.dropdown .nav-link::after {
+            display: none !important;
+        }
+
+        .navbar-nav .dropdown-toggle:hover i,
+        .navbar-nav .dropdown-toggle.active i {
+            color: #7ec400;
+        }
+
+        .dropdown-menu,
+        .dropdown-menu li {
+            list-style: none !important;
+        }
+
+        .dropdown-menu {
+            opacity: 0;
+            transform: translateY(10px) scale(0.95);
+            pointer-events: none;
+            border-radius: 10px;
+            display: block !important;
+        }
+
+        .dropdown-menu.opening {
+            animation: dropdownOpen 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .dropdown-menu.closing {
+            animation: dropdownClose 0.18s ease forwards;
+        }
+
+        @keyframes dropdownOpen {
+            0% {
+                opacity: 0;
+                transform: translateY(10px) scale(0.95);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                pointer-events: auto;
+            }
+        }
+
+        @keyframes dropdownClose {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translateY(-5px) scale(0.97);
+                pointer-events: none;
+            }
+        }
+
+        .dropdown-menu .dropdown-item {
+            border-radius: 6px;
+            padding: 10px 14px;
+            transition: all 0.25s ease;
+            color: #444;
+        }
+
+        .dropdown-menu .dropdown-item:hover {
+            background: rgba(126, 196, 0, 0.15);
+            color: #7ec400;
+            transform: translateX(4px);
+        }
+
+        .dropdown-menu .dropdown-item:active {
+            background: rgba(126, 196, 0, 0.2);
+            color: #7ec400;
+        }
+
+        /* ===================== BUSCADOR ===================== */
+        .search-container {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .search-input {
+            width: 0;
+            opacity: 0;
+            padding: 5px 12px;
+            margin-left: 10px;
+            border: 2px solid #ffa500;
+            border-radius: 8px;
+            outline: none;
+            transition: 0.4s ease;
+            font-size: 15px;
+        }
+
+        .search-input.show {
+            width: 180px;
+            opacity: 1;
+        }
+
+        /* ===================== ICONOS DERECHA ===================== */
+        .icon-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 2px solid #ffa500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffa500;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .cart {
+            background-color: #7ec400;
+            border-radius: 6px;
+            padding: 6px 12px;
+            color: #fff;
+            font-size: 18px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart span {
+            position: absolute;
+            top: -7px;
+            right: -7px;
+            background: #ffa600;
+            color: #fff;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .user-icon {
+            font-size: 22px;
+            color: #7ec400;
+            cursor: pointer;
+        }
+
+        .shop-banner {
+            background-image: url('https://images.pexels.com/photos/6675835/pexels-photo-6675835.jpeg');
+            height: 170px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .shop-banner::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.35);
+        }
+
+        .shop-banner-title {
+            font-size: 54px;
+            font-weight: 700;
+            z-index: 2;
+            position: relative;
+        }
+
+        .shop-banner-breadcrumb {
+            z-index: 2;
+            position: relative;
+            font-size: 18px;
+            opacity: .9;
+        }
+
+        .shop-banner-breadcrumb span {
+            color: #7ec400;
+            font-weight: 600;
+        }
+
+        /* MAIN IMAGE */
+
+        .main-image {
+            width: 100%;
+            height: 420px;
+            border-radius: 18px;
+            overflow: hidden;
+        }
+
+        .main-image img {
+            width: 100%;
+            border-radius: 18px;
+            object-fit: cover;
+            border-radius: 18px;
+            transition: .25s ease;
+        }
+
+        /* THUMBNAILS */
+        .thumb-img {
+            width: 100%;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: .25s ease;
+            border: 2px solid transparent;
+        }
+
+        .thumb-img:hover {
+            transform: scale(1.05);
+        }
+
+        .active-thumb {
+            outline: 3px solid #7ec400;
+        }
+
+        /* PRODUCT TEXT */
+        .product-price {
+            font-size: 26px;
+            font-weight: 700;
+            color: #7ec400;
+        }
+
+        .product-desc {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .product-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin: 25px 0;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            color: #444;
+        }
+
+        .meta-item i {
+            font-size: 18px;
+            color: #7ec400;
+            background: rgba(126, 196, 0, 0.15);
+            width: 34px;
+            height: 34px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+        }
+
+        .meta-label {
+            font-weight: 600;
+            color: #222;
+        }
+
+        .meta-value {
+            color: #444;
+            font-weight: 500;
+        }
+
+        /* Separador sutil */
+        .meta-divider {
+            height: 1px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.06);
+        }
+
+        /* CONTENEDOR GENERAL */
+        .qty-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        /* CAJA PRINCIPAL DEL NÚMERO */
+        .qty-box {
+            width: 60px;
+            height: 60px;
+            background: #efefef;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .qty-box span {
+            font-size: 22px;
+            font-weight: 600;
+            color: #222;
+        }
+
+        /* COLUMNA DE BOTONES */
+        .qty-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        /* BOTONES INDIVIDUALES */
+        .qty-btn {
+            width: 40px;
+            height: 26px;
+            background: #efefef;
+            border-radius: 8px;
+            border: none;
+            font-size: 18px;
+            font-weight: 600;
+            color: #222;
+            cursor: pointer;
+            transition: .25s ease;
+        }
+
+        .qty-btn:hover {
+            background: #7ec400;
+            color: white;
+        }
+
+        .add-cart-btn {
+            background: #7ec400;
+            color: #222;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            letter-spacing: 1px;
+            transition: .25s ease;
+        }
+
+        .add-cart-btn:hover {
+            background: #7ec400;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, .15);
+        }
+
+        /* ===================== FAQ ===================== */
+
+        .faq-section {
+            background: #fff;
+            padding: 20px 0;
+        }
+
+        .faq-title {
+            font-weight: 700;
+            font-size: 24px;
+            color: #222;
+            position: relative;
+        }
+
+        .faq-title::after {
+            content: "";
+            width: 60px;
+            height: 4px;
+            background: #7ec400;
+            border-radius: 6px;
+            display: block;
+            margin-top: 6px;
+        }
+
+        .accordion-item {
+            border: none;
+            background: transparent;
+        }
+
+        .faq-item {
+            background: #f7f7f7;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, .06);
+        }
+
+        .accordion-button {
+            background: transparent;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 16px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: none;
+            box-shadow: none !important;
+            transition: .25s ease;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background: rgba(126, 196, 0, 0.10);
+            color: #7ec400;
+        }
+
+        .accordion-body {
+            padding: 16px 20px;
+            color: #555;
+        }
+
+        .faq-icon {
+            color: #7ec400;
+            font-size: 18px;
+        }
+
+
+        /* ===================== FOOTER ===================== */
+
+        .footer-section {
+            background: #f5f5f5;
+            border-top: 4px solid #7ec400;
+        }
+
+        .footer-logo {
+            font-size: 32px;
+            font-weight: 700;
+            color: #7ec400;
+        }
+
+        .footer-text {
+            color: #555;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .footer-social a {
+            width: 38px;
+            height: 38px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background: #7ec400;
+            color: #fff;
+            margin-right: 10px;
+            font-size: 16px;
+            transition: .3s ease;
+            text-decoration: none;
+        }
+
+        .footer-social a:hover {
+            background: #5d9600;
+            transform: translateY(-3px);
+        }
+
+        .footer-title {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #222;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links li a {
+            text-decoration: none;
+            color: #555;
+            font-size: 15px;
+            transition: .25s ease;
+        }
+
+        .footer-links li a:hover {
+            color: #7ec400;
+            padding-left: 4px;
+        }
+
+        .footer-contact {
+            color: #555;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .footer-contact i {
+            color: #7ec400;
+            margin-right: 8px;
+        }
+
+        .footer-form {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-input {
+            flex: 1;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            outline: none;
+            font-size: 15px;
+        }
+
+        .footer-btn {
+            background: #7ec400;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .3s ease;
+        }
+
+        .footer-btn:hover {
+            background: #5d9600;
+        }
+
+        .footer-divider {
+            margin-top: 30px;
+            border-color: #ccc;
+        }
+
+        .footer-copy {
+            color: #777;
+            font-size: 14px;
+        }
+
+        /* === PANEL GENERAL === */
+        .cart-panel {
+            width: 380px;
+            border-left: 2px solid #eaeaea;
+        }
+
+        /* === HEADER === */
+        .cart-header {
+            border-bottom: 1px solid #eee;
+            background: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        /* === BODY — SCROLL BONITO === */
+        .cart-body {
+            max-height: calc(100vh - 250px);
+            overflow-y: auto;
+            scrollbar-width: thin;
+        }
+
+        .cart-body::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .cart-body::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 20px;
+        }
+
+        /* === PRODUCTO EN CARRITO === */
+        .cart-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 18px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        .cart-item img {
+            width: 78px;
+            height: 78px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        /* === CONTENIDO === */
+        .cart-details {
+            flex-grow: 1;
+        }
+
+        .cart-title {
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+
+        .cart-price {
+            font-weight: 700;
+            color: #7ec400;
+        }
+
+        /* === CONTADOR DENTRO DEL CARRITO === */
+        .cart-qty-box {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .cart-qty-btn {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: #efefef;
+            color: #333;
+            border-radius: 6px;
+            font-size: 18px;
+            line-height: 0;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+
+        .cart-qty-btn:hover {
+            background: #7ec400;
+            color: #fff;
+        }
+
+        .cart-qty-value {
+            width: 26px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* === ELIMINAR === */
+        .cart-remove {
+            color: #ff4d4d;
+            font-size: 20px;
+            cursor: pointer;
+            transition: .25s ease;
+        }
+
+        .cart-remove:hover {
+            transform: scale(1.2);
+        }
+
+        /* === FOOTER === */
+        .cart-footer {
+            background: #fff;
+            border-top: 1px solid #eee;
+        }
+
+        /* === BOTÓN PAGO === */
+        .checkout-btn {
+            background: #7ec400;
+            color: #fff;
+            border-radius: 10px;
+            font-size: 17px;
+            transition: .25s ease;
+        }
+
+        .checkout-btn:hover {
+            background: #68a700;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(126, 196, 0, .25);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ===================== TOPBAR ===================== -->
+    <div class="container-fluid topbar">
+        <div class="container d-flex justify-content-between">
+            <div>
+                <i class="fa-solid fa-location-dot me-1"></i> Avenida AgendasPeru
+                <i class="fa-solid fa-envelope ms-3 me-1"></i> camiept56@gmail.com
+            </div>
+
+            <div class="social-icons d-flex">
+                <a href="#" class="social fb"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="social ig"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="social tk"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="#" class="social wa"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== NAVBAR ===================== -->
+    <nav class="navbar navbar-expand-lg bg-white py-3">
+        <div class="container">
+            <a class="navbar-brand logo" href="#">Agendas Perú</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="menu">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Inicio</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="pagesDropdown">
+                            Tienda <i class="fa-solid fa-chevron-down"></i>
+                        </a>
+
+                        <ul class="dropdown-menu p-2">
+                            <li><a class="dropdown-item" href="#">Libretas</a></li>
+                            <li><a class="dropdown-item" href="#">Cuadernos</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item"><a class="nav-link" href="#">Contacto</a></li>
+                </ul>
+
+                <!-- ICONOS DERECHA -->
+                <div class="d-flex align-items-center">
+                    <!-- BUSCADOR -->
+                    <div class="search-container">
+                        <div class="icon-btn" id="btnSearch">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </div>
+                        <input type="text" id="searchInput" class="search-input" placeholder="Buscar..." />
+                    </div>
+
+                    <!-- CARRITO -->
+                    <div class="cart">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <span>3</span>
+                    </div>
+
+                    <!-- USUARIO -->
+                    <i class="fa-solid fa-user user-icon ms-3"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===================== BANNER HEADER ===================== -->
+    <section class="shop-banner d-flex align-items-center">
+        <div class="container text-center text-white">
+            <h1 class="shop-banner-title">Tienda</h1>
+        </div>
+    </section>
+
+    <!-- ===================== PRODUCT DETAIL SECTION ===================== -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-5">
+
+                <!-- ===================== LEFT: PRODUCT IMAGES ===================== -->
+                <div class="col-lg-6">
+
+                    <!-- MAIN IMAGE -->
+                    <div class="main-image mb-4">
+                        <img src="https://images.pexels.com/photos/68562/pexels-photo-68562.jpeg"
+                            class="img-fluid rounded-4 shadow" id="productMainImg">
+                    </div>
+
+                    <!-- THUMBNAILS -->
+                    <div class="row g-3">
+                        <div class="col-4">
+                            <img src="https://images.pexels.com/photos/68562/pexels-photo-68562.jpeg"
+                                class="thumb-img img-fluid rounded-3 shadow-sm active-thumb">
+                        </div>
+                        <div class="col-4">
+                            <img src="https://images.pexels.com/photos/8060220/pexels-photo-8060220.jpeg"
+                                class="thumb-img img-fluid rounded-3 shadow-sm">
+                        </div>
+                        <div class="col-4">
+                            <img src="https://images.pexels.com/photos/636237/pexels-photo-636237.jpeg"
+                                class="thumb-img img-fluid rounded-3 shadow-sm">
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ===================== RIGHT: PRODUCT INFO ===================== -->
+                <div class="col-lg-6">
+
+                    <h2 class="fw-bold product-title text-dark mb-2">Agenda Premium 2025</h2>
+
+                    <!-- PRICE + STARS -->
+                    <div class="d-flex align-items-center mb-3">
+                        <span class="product-price me-3">S/. 25.00</span>
+
+                        <div class="stars text-warning">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star-half-stroke"></i>
+                        </div>
+                    </div>
+
+                    <!-- DESCRIPTION -->
+                    <p class="product-desc mb-4">
+                        Agenda profesional con papel grueso de 120gsm, tapa dura laminada, calendarios mensuales,
+                        semanales y espacio de notas. Ideal para estudiantes, profesionales y amantes de la
+                        organización.
+                    </p>
+
+                    <hr>
+
+                    <!-- PRODUCT META INFO -->
+                    <div class="product-meta mt-4">
+
+                        <div class="meta-item">
+                            <i class="fa-solid fa-tags"></i>
+                            <span class="meta-label">Categoría:</span>
+                            <span class="meta-value">Agendas</span>
+                        </div>
+
+                        <div class="meta-divider"></div>
+
+                        <div class="meta-item">
+                            <i class="fa-solid fa-weight-hanging"></i>
+                            <span class="meta-label">Peso:</span>
+                            <span class="meta-value">1 kg</span>
+                        </div>
+
+                        <div class="meta-divider"></div>
+
+                        <div class="meta-item">
+                            <i class="fa-solid fa-box"></i>
+                            <span class="meta-label">Dimensiones:</span>
+                            <span class="meta-value">60 × 60 × 90 cm</span>
+                        </div>
+
+                    </div>
+
+                    <hr>
+
+                    <div class="d-flex align-items-center gap-3">
+
+                        <div class="qty-wrapper d-flex align-items-center gap-2">
+
+                            <!-- Número -->
+                            <div class="qty-box shadow-sm">
+                                <span id="qtyValue">1</span>
+                            </div>
+
+                            <!-- Botones + y - en columna -->
+                            <div class="qty-controls">
+                                <button id="qtyPlus" class="qty-btn">+</button>
+                                <button id="qtyMinus" class="qty-btn">−</button>
+                            </div>
+
+                        </div>
+
+                        <!-- ADD TO CART BUTTON -->
+                        <button class="btn add-cart-btn px-4 py-2 fw-semibold">
+                            Añadir al carrito
+                        </button>
+
+                    </div>
+
+                    <!-- SHARE -->
+                    <div class="mt-4">
+                        <span class="fw-semibold me-2">Compartir:</span>
+                        <a href="#" class="text-dark me-3"><i class="fa-brands fa-facebook"></i></a>
+                        <a href="#" class="text-dark me-3"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="#" class="text-dark me-3"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="text-dark"><i class="fa-brands fa-google"></i></a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== FAQ PRODUCTO ===================== -->
+    <section class="faq-section mt-5 container">
+        <h3 class="faq-title mb-4">Preguntas Frecuentes</h3>
+
+        <div class="accordion" id="faqAccordion">
+
+            <!-- FAQ 1 -->
+            <div class="accordion-item faq-item">
+                <h2 class="accordion-header" id="faq1">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faq-collapse1">
+                        <i class="fa-solid fa-circle-question faq-icon"></i>
+                        ¿De qué material está hecha la agenda?
+                    </button>
+                </h2>
+                <div id="faq-collapse1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Está elaborada con tapa dura laminada premium y papel grueso de 120gsm,
+                        ideal para evitar filtraciones de tinta.
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ 2 -->
+            <div class="accordion-item faq-item">
+                <h2 class="accordion-header" id="faq2">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faq-collapse2">
+                        <i class="fa-solid fa-truck-fast faq-icon"></i>
+                        ¿Hacen envíos a todo el Perú?
+                    </button>
+                </h2>
+                <div id="faq-collapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Sí, realizamos envíos a nivel nacional mediante servicios de courier seguros y rápidos.
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ 3 -->
+            <div class="accordion-item faq-item">
+                <h2 class="accordion-header" id="faq3">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faq-collapse3">
+                        <i class="fa-solid fa-rotate-left faq-icon"></i>
+                        ¿Puedo devolver o cambiar el producto?
+                    </button>
+                </h2>
+                <div id="faq-collapse3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Sí, puedes solicitar cambios o devoluciones dentro de los primeros 7 días
+                        si el producto presenta fallas o llega en mal estado.
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ 4 -->
+            <div class="accordion-item faq-item">
+                <h2 class="accordion-header" id="faq4">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#faq-collapse4">
+                        <i class="fa-solid fa-credit-card faq-icon"></i>
+                        ¿Qué métodos de pago aceptan?
+                    </button>
+                </h2>
+                <div id="faq-collapse4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Aceptamos Yape, Plin, transferencia bancaria y pagos con tarjeta en delivery.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===================== FOOTER PROFESIONAL ===================== -->
+    <footer class="footer-section mt-5 pt-5 pb-4">
+        <div class="container">
+
+            <div class="row g-4">
+
+                <!-- LOGO + DESCRIPCIÓN -->
+                <div class="col-lg-4 col-md-6">
+                    <h3 class="footer-logo">Agendas Perú</h3>
+                    <p class="footer-text mt-3">
+                        En AgendasPeru creamos agendas, libretas y planners premium diseñados para acompañarte en tu día
+                        a día. Calidad, diseño y organización en un solo lugar.
+                    </p>
+
+                    <!-- Redes Sociales -->
+                    <div class="footer-social mt-3">
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <!-- ENLACES RÁPIDOS -->
+                <div class="col-lg-2 col-md-6">
+                    <h5 class="footer-title">Enlaces</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="#">Tienda</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </div>
+
+                <!-- INFORMACIÓN -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-title">Contáctanos</h5>
+
+                    <p class="footer-contact">
+                        <i class="fa-solid fa-location-dot"></i>
+                        Avenida AgendasPeru
+                    </p>
+
+                    <p class="footer-contact">
+                        <i class="fa-solid fa-phone"></i>
+                        +51 976 823 381
+                    </p>
+
+                    <p class="footer-contact">
+                        <i class="fa-solid fa-envelope"></i>
+                        icamiept56@gmail.com
+                    </p>
+                </div>
+
+                <!-- SUSCRIPCIÓN -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-title">Suscríbete</h5>
+
+                    <p class="footer-text">
+                        Recibe promociones, ofertas y novedades directamente en tu correo.
+                    </p>
+
+                    <form class="footer-form mt-3">
+                        <input type="email" class="footer-input" placeholder="Tu correo" />
+                        <button class="footer-btn">Enviar</button>
+                    </form>
+                </div>
+
+            </div>
+
+            <hr class="footer-divider" />
+
+            <div class="text-center mt-3 footer-copy">
+                © 2024 Agendas Perú — Todos los derechos reservados | Pagina creada con fines educativos.
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===================== OFFCANVAS CARRITO PROFESIONAL ===================== -->
+    <div class="offcanvas offcanvas-end cart-panel" tabindex="-1" id="cartSidebar">
+        <div class="cart-header px-4 py-3 d-flex justify-content-between align-items-center">
+            <h5 class="fw-bold mb-0">Tu carrito</h5>
+            <button type="button" class="btn-close shadow-none" data-bs-dismiss="offcanvas"></button>
+        </div>
+
+        <div class="cart-body px-4 pt-3">
+            <div id="cartItems"></div>
+        </div>
+
+        <div class="cart-footer px-4 pb-4 pt-3">
+            <div class="d-flex justify-content-between mb-2">
+                <span class="fw-semibold">Subtotal:</span>
+                <span id="cartSubtotal" class="fw-bold text-dark">S/. 0.00</span>
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+                <span class="fw-semibold">Envío:</span>
+                <span class="fw-bold text-dark">S/. 0.00</span>
+            </div>
+
+            <hr class="my-3">
+
+            <div class="d-flex justify-content-between mb-3">
+                <span class="fw-semibold fs-5">Total:</span>
+                <span id="cartTotal" class="fw-bold fs-5 text-success">S/. 0.00</span>
+            </div>
+
+            <button class="btn checkout-btn w-100 py-3 fw-bold">
+                Ir a pagar
+            </button>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        /* ===================== TOPBAR + NAVBAR STICKY ===================== */
+
+        const topbar = document.querySelector(".topbar");
+        const navbar = document.querySelector(".navbar");
+
+        window.addEventListener("scroll", () => {
+            let scrollY = window.scrollY;
+
+            if (scrollY > 80) {
+                topbar.classList.add("hide"); // Oculta la topbar
+                navbar.classList.add("sticky-shadow"); // Sombra navbar
+            } else {
+                topbar.classList.remove("hide");
+                navbar.classList.remove("sticky-shadow");
+            }
+        });
+
+        /* ===================== DROPDOWN CUSTOM ANIMADO ===================== */
+
+        const toggle = document.querySelector(".dropdown-toggle");
+        const menu = document.querySelector(".dropdown-menu");
+        let isOpen = false;
+
+        toggle.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            isOpen ? closeMenu() : openMenu();
+        });
+
+        function openMenu() {
+            isOpen = true;
+            menu.classList.remove("closing");
+            menu.classList.add("opening");
+        }
+
+        function closeMenu() {
+            isOpen = false;
+            menu.classList.remove("opening");
+            menu.classList.add("closing");
+        }
+
+        document.addEventListener("click", function (e) {
+            if (isOpen && !menu.contains(e.target) && !toggle.contains(e.target)) {
+                closeMenu();
+            }
+        });
+
+        /* ===================== BUSCADOR ANIMADO ===================== */
+
+        const btnSearch = document.getElementById("btnSearch");
+        const searchInput = document.getElementById("searchInput");
+
+        btnSearch.addEventListener("click", (e) => {
+            e.stopPropagation();
+            searchInput.classList.toggle("show");
+
+            if (searchInput.classList.contains("show")) searchInput.focus();
+        });
+
+        document.addEventListener("click", () => {
+            searchInput.classList.remove("show");
+        });
+
+        // THUMBNAILS CHANGER
+        document.querySelectorAll(".thumb-img").forEach(img => {
+            img.addEventListener("click", () => {
+                document.querySelector("#productMainImg").src = img.src;
+
+                document.querySelectorAll(".thumb-img").forEach(t => t.classList.remove("active-thumb"));
+                img.classList.add("active-thumb");
+            });
+        });
+
+        let qty = 1;
+
+        document.getElementById("qtyPlus").onclick = () => {
+            qty++;
+            document.getElementById("qtyValue").textContent = qty;
+        };
+
+        document.getElementById("qtyMinus").onclick = () => {
+            if (qty > 1) qty--;
+            document.getElementById("qtyValue").textContent = qty;
+        };
+
+        const cartSidebar = new bootstrap.Offcanvas("#cartSidebar");
+        const cartIcon = document.querySelector(".cart");
+        const addToCartBtn = document.querySelector(".add-cart-btn");
+
+        let cart = [];
+
+        cartIcon.addEventListener("click", () => cartSidebar.show());
+
+        /* ========= AÑADIR PRODUCTO ========= */
+        addToCartBtn.addEventListener("click", () => {
+            const qty = parseInt(document.getElementById("qtyValue").textContent);
+
+            const product = {
+                name: document.querySelector(".product-title").textContent,
+                price: 25.00,
+                qty: qty,
+                img: document.getElementById("productMainImg").src
+            };
+
+            cart.push(product);
+            updateCartUI();
+            cartSidebar.show();
+        });
+
+        /* ========= ACTUALIZAR UI ========= */
+        function updateCartUI() {
+            const cartItems = document.getElementById("cartItems");
+            const cartSubtotal = document.getElementById("cartSubtotal");
+            const cartTotal = document.getElementById("cartTotal");
+
+            cartItems.innerHTML = "";
+            let subtotal = 0;
+
+            cart.forEach((item, index) => {
+                const itemSubtotal = item.qty * item.price;
+                subtotal += itemSubtotal;
+
+                cartItems.innerHTML += `
+        <div class="cart-item">
+            <img src="${item.img}">
+
+            <div class="cart-details">
+                <div class="cart-title">${item.name}</div>
+                <div class="cart-price">S/. ${item.price.toFixed(2)}</div>
+
+                <div class="cart-qty-box mt-2">
+                    <button class="cart-qty-btn" onclick="changeQty(${index}, -1)">−</button>
+                    <span class="cart-qty-value">${item.qty}</span>
+                    <button class="cart-qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                </div>
+            </div>
+
+            <i class="fa-solid fa-xmark cart-remove" onclick="removeItem(${index})"></i>
+        </div>`;
+            });
+
+            cartSubtotal.textContent = "S/. " + subtotal.toFixed(2);
+            cartTotal.textContent = "S/. " + subtotal.toFixed(2);
+        }
+
+        /* ========= CAMBIAR CANTIDAD ========= */
+        function changeQty(index, amount) {
+            cart[index].qty += amount;
+            if (cart[index].qty < 1) cart[index].qty = 1;
+            updateCartUI();
+        }
+
+        /* ========= ELIMINAR PRODUCTO ========= */
+        function removeItem(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+    </script>
+</body>
+
+</html>
