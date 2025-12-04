@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fruitables | Pago</title>
+    <link rel="icon" href="img/Favicon.AgendasPeru.png">
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -12,7 +13,7 @@
     <!-- Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
 
-    
+
     <style>
         html {
             scroll-behavior: smooth;
@@ -729,7 +730,7 @@
                     <!-- CARRITO -->
                     <div class="cart">
                         <i class="fa-solid fa-bag-shopping"></i>
-                        <span>3</span>
+                        <span></span>
                     </div>
 
                     <!-- USUARIO -->
@@ -935,32 +936,22 @@
 
     <script>
         /* ===================== TOPBAR + NAVBAR STICKY ===================== */
-
         const topbar = document.querySelector(".topbar");
         const navbar = document.querySelector(".navbar");
 
         window.addEventListener("scroll", () => {
-            let scrollY = window.scrollY;
-
-            if (scrollY > 80) {
-                topbar.classList.add("hide"); // Oculta la topbar
-                navbar.classList.add("sticky-shadow"); // Sombra navbar
-            } else {
-                topbar.classList.remove("hide");
-                navbar.classList.remove("sticky-shadow");
-            }
+            topbar?.classList.toggle("hide", window.scrollY > 80);
+            navbar?.classList.toggle("sticky-shadow", window.scrollY > 80);
         });
 
-        /* ===================== DROPDOWN CUSTOM ANIMADO ===================== */
-
+        /* ===================== DROPDOWN ===================== */
         const toggle = document.querySelector(".dropdown-toggle");
         const menu = document.querySelector(".dropdown-menu");
         let isOpen = false;
 
-        toggle.addEventListener("click", function (e) {
+        toggle?.addEventListener("click", (e) => {
             e.preventDefault();
             e.stopPropagation();
-
             isOpen ? closeMenu() : openMenu();
         });
 
@@ -976,35 +967,132 @@
             menu.classList.add("closing");
         }
 
-        document.addEventListener("click", function (e) {
-            if (isOpen && !menu.contains(e.target) && !toggle.contains(e.target)) {
-                closeMenu();
-            }
+        document.addEventListener("click", (e) => {
+            if (isOpen && !menu.contains(e.target) && !toggle.contains(e.target)) closeMenu();
         });
 
-        /* ===================== BUSCADOR ANIMADO ===================== */
-
+        /* ===================== BUSCADOR ===================== */
         const btnSearch = document.getElementById("btnSearch");
         const searchInput = document.getElementById("searchInput");
 
-        btnSearch.addEventListener("click", (e) => {
+        btnSearch?.addEventListener("click", (e) => {
             e.stopPropagation();
             searchInput.classList.toggle("show");
-
             if (searchInput.classList.contains("show")) searchInput.focus();
         });
+        document.addEventListener("click", () => searchInput?.classList.remove("show"));
 
-        document.addEventListener("click", () => {
-            searchInput.classList.remove("show");
+        /* ========================================================
+           CARRITO GLOBAL
+        ======================================================== */
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        const cartSidebar = new bootstrap.Offcanvas("#cartSidebar");
+        const cartIcon = document.querySelector(".cart");
+        const addToCartBtn = document.querySelector(".add-cart-btn");
+
+        cartIcon?.addEventListener("click", () => cartSidebar.show());
+
+        /* ===================== BURBUJA DEL CARRITO ===================== */
+        function updateCartBadge() {
+            let badge = document.querySelector(".cart span");
+
+            if (!badge) {
+                const span = document.createElement("span");
+                cartIcon.appendChild(span);
+                badge = span;
+            }
+
+            const totalQty = cart.reduce((acc, item) => acc + item.qty, 0);
+
+            badge.textContent = totalQty;
+            badge.style.display = totalQty > 0 ? "flex" : "none";
+        }
+
+        /* ===================== UI DEL OFFCANVAS ===================== */
+        function updateCartUI() {
+            const cartItems = document.getElementById("cartItems");
+            const cartSubtotal = document.getElementById("cartSubtotal");
+            const cartTotal = document.getElementById("cartTotal");
+
+            if (!cartItems) return;
+
+            cartItems.innerHTML = "";
+            let subtotal = 0;
+
+            cart.forEach((item, index) => {
+                const itemSubtotal = item.qty * item.price;
+                subtotal += itemSubtotal;
+
+                cartItems.innerHTML += `
+            <div class="cart-item">
+                <img src="${item.img}">
+                <div class="cart-details">
+                    <div class="cart-title">${item.name}</div>
+                    <div class="cart-price">S/. ${item.price.toFixed(2)}</div>
+
+                    <div class="cart-qty-box mt-2">
+                        <button class="cart-qty-btn" onclick="changeQty(${index}, -1)">−</button>
+                        <span class="cart-qty-value">${item.qty}</span>
+                        <button class="cart-qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                    </div>
+                </div>
+                <i class="fa-solid fa-xmark cart-remove" onclick="removeItem(${index})"></i>
+            </div>
+        `;
+            });
+
+            cartSubtotal.textContent = "S/. " + subtotal.toFixed(2);
+            cartTotal.textContent = "S/. " + subtotal.toFixed(2);
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+            updateCartBadge();
+        }
+
+        /* ===================== CANTIDAD ===================== */
+        function changeQty(index, amount) {
+            cart[index].qty += amount;
+            if (cart[index].qty < 1) cart[index].qty = 1;
+            updateCartUI();
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        /* ===================== AGREGAR AL CARRITO ===================== */
+        function getProductPrice() {
+            const priceText = document.querySelector(".product-price")
+                ?.textContent.replace("S/.", "").replace("S/", "").trim();
+
+            return parseFloat(priceText) || 0;
+        }
+
+        addToCartBtn?.addEventListener("click", () => {
+            const qty = parseInt(document.getElementById("qtyValue")?.textContent || 1);
+            const price = getProductPrice();
+
+            const product = {
+                name: document.querySelector(".product-title")?.textContent || "Producto",
+                price: price,
+                qty: qty,
+                img: document.getElementById("productMainImg")?.src
+            };
+
+            cart.push(product);
+            updateCartUI();
+            cartSidebar.show();
         });
 
-        let cart = JSON.parse(localStorage.getItem("cartData") || "[]");
-
+        /* ===================== CHECKOUT ===================== */
         const checkoutProducts = document.getElementById("checkoutProducts");
         const checkoutSubtotal = document.getElementById("checkoutSubtotal");
         const checkoutTotal = document.getElementById("checkoutTotal");
 
         function loadCheckout() {
+            if (!checkoutProducts) return;
+
             let subtotal = 0;
             checkoutProducts.innerHTML = "";
 
@@ -1012,15 +1100,15 @@
                 subtotal += item.price * item.qty;
 
                 checkoutProducts.innerHTML += `
-                    <div class="summary-product">
-                        <img src="${item.img}">
-                        <div>
-                            <div class="summary-title">${item.name}</div>
-                            <small>${item.qty}x</small><br>
-                            <strong>S/. ${item.price.toFixed(2)}</strong>
-                        </div>
-                    </div>
-                `;
+            <div class="summary-product">
+                <img src="${item.img}">
+                <div>
+                    <div class="summary-title">${item.name}</div>
+                    <small>${item.qty}x</small><br>
+                    <strong>S/. ${item.price.toFixed(2)}</strong>
+                </div>
+            </div>
+        `;
             });
 
             checkoutSubtotal.textContent = "S/. " + subtotal.toFixed(2);
@@ -1029,22 +1117,11 @@
 
         loadCheckout();
 
-
-        /* =====================================
-           OPCIONES DE ENVÍO
-        ===================================== */
-
-        document.getElementById("optDelivery").onclick = () => {
-            optDelivery.classList.add("active");
-            optPickup.classList.remove("active");
-        };
-
-        document.getElementById("optPickup").onclick = () => {
-            optPickup.classList.add("active");
-            optDelivery.classList.remove("active");
-        };
-
+        /* ===================== AL CARGAR ===================== */
+        updateCartUI();
+        updateCartBadge();
     </script>
+
 </body>
 
 </html>

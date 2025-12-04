@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Agendas Peru</title>
-    <link rel="icon" href="Favicon.AgendasPeru.png">
+    <link rel="icon" href="img/Favicon.AgendasPeru.png">
 
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -14,7 +14,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
 
     <style>
-
         html {
             scroll-behavior: smooth;
             scroll-padding-top: 0;
@@ -35,7 +34,7 @@
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
         }
-        
+
         /* ===================== TOPBAR ===================== */
         .topbar {
             background-color: #7ec400;
@@ -857,6 +856,103 @@
             color: #777;
             font-size: 14px;
         }
+
+        /* === PRODUCTO EN CARRITO === */
+        .cart-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 18px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        .cart-item img {
+            width: 78px;
+            height: 78px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        /* === CONTENIDO === */
+        .cart-details {
+            flex-grow: 1;
+        }
+
+        .cart-title {
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+
+        .cart-price {
+            font-weight: 700;
+            color: #7ec400;
+        }
+
+        /* === CONTADOR DENTRO DEL CARRITO === */
+        .cart-qty-box {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .cart-qty-btn {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: #efefef;
+            color: #333;
+            border-radius: 6px;
+            font-size: 18px;
+            line-height: 0;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+
+        .cart-qty-btn:hover {
+            background: #7ec400;
+            color: #fff;
+        }
+
+        .cart-qty-value {
+            width: 26px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* === ELIMINAR === */
+        .cart-remove {
+            color: #ff4d4d;
+            font-size: 20px;
+            cursor: pointer;
+            transition: .25s ease;
+        }
+
+        .cart-remove:hover {
+            transform: scale(1.2);
+        }
+
+        /* === FOOTER === */
+        .cart-footer {
+            background: #fff;
+            border-top: 1px solid #eee;
+        }
+
+        /* === BOTÓN PAGO === */
+        .checkout-btn {
+            background: #7ec400;
+            color: #fff;
+            border-radius: 10px;
+            font-size: 17px;
+            transition: .25s ease;
+        }
+
+        .checkout-btn:hover {
+            background: #68a700;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(126, 196, 0, .25);
+        }
     </style>
 </head>
 
@@ -920,7 +1016,7 @@
                     <!-- CARRITO -->
                     <div class="cart">
                         <i class="fa-solid fa-bag-shopping"></i>
-                        <span>3</span>
+                        <span></span>
                     </div>
 
                     <!-- USUARIO -->
@@ -994,99 +1090,99 @@
                     <!-- Producto 1 -->
                     <div class="product-card">
                         <div class="product-img">
-                            <img src="https://images.pexels.com/photos/68562/pexels-photo-68562.jpeg" />
+                            <img src="img/Libreta1.1.jpg" />
                         </div>
                         <div class="product-action-single">
                         </div>
-                        <h5 class="product-title">Libreta 1</h5>
-                        <span class="product-price">S/. 20.00</span>
+                        <h5 class="product-title">Libreta de Pedidos</h5>
+                        <span class="product-price">S/. 40.00</span>
                     </div>
 
                     <!-- Producto 2 -->
                     <div class="product-card">
                         <div class="product-img">
-                            <img src="https://images.pexels.com/photos/30101197/pexels-photo-30101197.jpeg" />
+                            <img src="img/Libreta2.jpg" />
                         </div>
                         <div class="product-action-single">
                         </div>
-                        <h5 class="product-title">Libreta 1</h5>
-                        <span class="product-price">S/. 20.00</span>
+                        <h5 class="product-title">Diario A6 De Recetas</h5>
+                        <span class="product-price">S/. 18.00</span>
                     </div>
 
                     <!-- Producto 3 -->
                     <div class="product-card">
                         <div class="product-img">
-                            <img src="https://images.pexels.com/photos/1018133/pexels-photo-1018133.jpeg" />
+                            <img src="img/Libreta3.jpg" />
                         </div>
                         <div class="product-action-single">
                         </div>
-                        <h5 class="product-title">Libreta 1</h5>
-                        <span class="product-price">S/. 20.00</span>
+                        <h5 class="product-title">Cuaderno Perú</h5>
+                        <span class="product-price">S/. 21.00</span>
                     </div>
 
                     <!-- Producto 4 -->
                     <div class="product-card">
                         <div class="product-img">
-                            <img src="https://images.pexels.com/photos/243221/pexels-photo-243221.jpeg" />
+                            <img src="img/Libreta4.jpg" />
                         </div>
                         <div class="product-action-single">
                         </div>
-                        <h5 class="product-title">Libreta 1</h5>
-                        <span class="product-price">S/. 20.00</span>
+                        <h5 class="product-title">Carpeta A4 + Cuaderno A5 Gold</h5>
+                        <span class="product-price">S/. 54.00</span>
                     </div>
 
                     <!-- Producto 5 -->
                     <div class="product-card">
                         <div class="product-img">
-                            <img src="https://images.pexels.com/photos/636237/pexels-photo-636237.jpeg" />
+                            <img src="img/Libreta5.jpg" />
                         </div>
                         <div class="product-action-single">
                         </div>
-                        <h5 class="product-title">Libreta 1</h5>
-                        <span class="product-price">S/. 20.00</span>
+                        <h5 class="product-title">Agenda Petite Victoria</h5>
+                        <span class="product-price">S/. 60.00</span>
                     </div>
 
                     <!-- Producto 6 -->
                     <div class="product-card">
                         <div class="product-img">
-                            <img src="https://images.pexels.com/photos/849973/pexels-photo-849973.jpeg" />
+                            <img src="img/Libreta6.jpg" />
                         </div>
                         <div class="product-action-single">
                         </div>
-                        <h5 class="product-title">Libreta 1</h5>
-                        <span class="product-price">S/. 20.00</span>
+                        <h5 class="product-title">Agenda Petite Gracia</h5>
+                        <span class="product-price">S/. 60.00</span>
                     </div>
 
                     <!-- Producto 7 -->
                     <div class="product-card">
                         <div class="product-img">
-                            <img src="https://images.pexels.com/photos/8060220/pexels-photo-8060220.jpeg" />
+                            <img src="img/Libreta7.jpg" />
                         </div>
                         <div class="product-action-single">
                         </div>
-                        <h5 class="product-title">Libreta 1</h5>
-                        <span class="product-price">S/. 20.00</span>
+                        <h5 class="product-title">Agenda Diaria Gold</h5>
+                        <span class="product-price">S/. 115.00</span>
                     </div>
 
                     <!-- Producto 8 -->
                     <div class="product-card">
                         <div class="product-img">
-                            <img src="https://images.pexels.com/photos/816527/pexels-photo-816527.jpeg" />
+                            <img src="img/Libreta8.jpg" />
                         </div>
                         <div class="product-action-single">
                         </div>
-                        <h5 class="product-title">Libreta 1</h5>
-                        <span class="product-price">S/. 20.00</span>
+                        <h5 class="product-title">Agenda Petite Cósmica</h5>
+                        <span class="product-price">S/. 60.00</span>
                     </div>
 
                     <!-- Producto 9 -->
                     <div class="product-card">
                         <div class="product-img">
-                            <img src="https://images.pexels.com/photos/7657606/pexels-photo-7657606.jpeg" />
+                            <img src="img/Libreta9.jpg" />
                         </div>
                         <div class="product-action-single">
                         </div>
-                        <h5 class="product-title">Libreta 1</h5>
+                        <h5 class="product-title">Libreta de Notas A6</h5>
                         <span class="product-price">S/. 20.00</span>
                     </div>
                 </div>
@@ -1225,7 +1321,8 @@
                 <div class="col-lg-4 col-md-6">
                     <h3 class="footer-logo">Agendas Perú</h3>
                     <p class="footer-text mt-3">
-                        En AgendasPeru creamos agendas, libretas y planners premium diseñados para acompañarte en tu día a día. Calidad, diseño y organización en un solo lugar.
+                        En AgendasPeru creamos agendas, libretas y planners premium diseñados para acompañarte en tu día
+                        a día. Calidad, diseño y organización en un solo lugar.
                     </p>
 
                     <!-- Redes Sociales -->
@@ -1328,33 +1425,24 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        /* ===================== TOPBAR + NAVBAR STICKY ===================== */
-
+        
         const topbar = document.querySelector(".topbar");
         const navbar = document.querySelector(".navbar");
 
         window.addEventListener("scroll", () => {
-            let scrollY = window.scrollY;
-
-            if (scrollY > 80) {
-                topbar.classList.add("hide"); // Oculta la topbar
-                navbar.classList.add("sticky-shadow"); // Sombra navbar
-            } else {
-                topbar.classList.remove("hide");
-                navbar.classList.remove("sticky-shadow");
-            }
+            topbar?.classList.toggle("hide", window.scrollY > 80);
+            navbar?.classList.toggle("sticky-shadow", window.scrollY > 80);
         });
 
-        /* ===================== DROPDOWN CUSTOM ANIMADO ===================== */
+
 
         const toggle = document.querySelector(".dropdown-toggle");
         const menu = document.querySelector(".dropdown-menu");
         let isOpen = false;
 
-        toggle.addEventListener("click", function (e) {
+        toggle?.addEventListener("click", (e) => {
             e.preventDefault();
             e.stopPropagation();
-
             isOpen ? closeMenu() : openMenu();
         });
 
@@ -1370,75 +1458,168 @@
             menu.classList.add("closing");
         }
 
-        document.addEventListener("click", function (e) {
+        document.addEventListener("click", (e) => {
             if (isOpen && !menu.contains(e.target) && !toggle.contains(e.target)) {
                 closeMenu();
             }
         });
 
-        /* ===================== BUSCADOR ANIMADO ===================== */
-
         const btnSearch = document.getElementById("btnSearch");
         const searchInput = document.getElementById("searchInput");
 
-        btnSearch.addEventListener("click", (e) => {
+        btnSearch?.addEventListener("click", (e) => {
             e.stopPropagation();
             searchInput.classList.toggle("show");
-
             if (searchInput.classList.contains("show")) searchInput.focus();
         });
+        document.addEventListener("click", () => searchInput?.classList.remove("show"));
 
-        document.addEventListener("click", () => {
-            searchInput.classList.remove("show");
-        });
 
-        /* ===================== SLIDER INFINITO PROFESIONAL ===================== */
 
         const slider = document.getElementById("infiniteSlider");
-        let cards = [...slider.children];
+        if (slider) {
+            let cards = [...slider.children];
 
-        // Duplicar solo 1 vez
-        if (!slider.dataset.cloned) {
-            cards.forEach(card => slider.appendChild(card.cloneNode(true)));
-            slider.dataset.cloned = "true";
+            if (!slider.dataset.cloned) {
+                cards.forEach(c => slider.appendChild(c.cloneNode(true)));
+                slider.dataset.cloned = "true";
+            }
+
+            const SPEED = 90;
+            slider.style.setProperty("--speed", `${slider.scrollWidth / SPEED}s`);
+
+            let manualOffset = 0;
+            let manualMode = false;
+            let resumeTimer;
+
+            slider.addEventListener("mouseenter", () => slider.style.animationPlayState = "paused");
+            slider.addEventListener("mouseleave", () => {
+                if (!manualMode) slider.style.animationPlayState = "running";
+            });
+
+            function moveManual(amount) {
+                clearTimeout(resumeTimer);
+                manualMode = true;
+
+                slider.style.animation = "none";
+                slider.style.transform = `translateX(${manualOffset + amount}px)`;
+                manualOffset += amount;
+
+                resumeTimer = setTimeout(() => {
+                    manualMode = false;
+                    slider.style.transform = "none";
+                    slider.style.animation = `scrollInfinite var(--speed) linear infinite`;
+                }, 2000);
+            }
+
+            document.querySelector(".prod-prev")?.addEventListener("click", () => moveManual(150));
+            document.querySelector(".prod-next")?.addEventListener("click", () => moveManual(-150));
         }
 
-        // Velocidad (px por segundo)
-        const SPEED = 90;
-        slider.style.setProperty("--speed", `${slider.scrollWidth / SPEED}s`);
+        // Cargar carrito desde localStorage
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-        let manualOffset = 0;
-        let manualMode = false;
-        let resumeTimer;
+        const cartSidebar = new bootstrap.Offcanvas("#cartSidebar");
+        const cartIcon = document.querySelector(".cart");
+        const addToCartBtn = document.querySelector(".add-cart-btn");
 
-        /* PAUSAR CON HOVER */
-        slider.addEventListener("mouseenter", () => {
-            slider.style.animationPlayState = "paused";
-        });
-        slider.addEventListener("mouseleave", () => {
-            if (!manualMode) slider.style.animationPlayState = "running";
-        });
+        /* 🔵 Abrir carrito */
+        cartIcon?.addEventListener("click", () => cartSidebar.show());
 
-        /* BOTONES */
-        function moveManual(amount) {
-            clearTimeout(resumeTimer);
 
-            manualMode = true;
-            slider.style.animation = "none"; // detiene loop
-            slider.style.transform = `translateX(${manualOffset + amount}px)`;
-            manualOffset += amount;
+        function updateCartBadge() {
+            let badge = document.querySelector(".cart span");
 
-            resumeTimer = setTimeout(() => {
-                manualMode = false;
-                slider.style.transform = "none";
-                slider.style.animation = `scrollInfinite var(--speed) linear infinite`;
-            }, 2000);
+            if (!badge) {
+                badge = document.createElement("span");
+                cartIcon.appendChild(badge);
+            }
+
+            const totalQty = cart.reduce((acc, item) => acc + item.qty, 0);
+
+            badge.textContent = totalQty;
+            badge.style.display = totalQty > 0 ? "flex" : "none";
         }
 
-        document.querySelector(".prod-prev").addEventListener("click", () => moveManual(150));
-        document.querySelector(".prod-next").addEventListener("click", () => moveManual(-150));
+        function updateCartUI() {
+            const cartItems = document.getElementById("cartItems");
+            const cartSubtotal = document.getElementById("cartSubtotal");
+            const cartTotal = document.getElementById("cartTotal");
+
+            if (!cartItems) return;
+
+            cartItems.innerHTML = "";
+            let subtotal = 0;
+
+            cart.forEach((item, index) => {
+                subtotal += item.price * item.qty;
+
+                cartItems.innerHTML += `
+            <div class="cart-item">
+                <img src="${item.img}">
+                <div class="cart-details">
+                    <div class="cart-title">${item.name}</div>
+                    <div class="cart-price">S/. ${item.price.toFixed(2)}</div>
+
+                    <div class="cart-qty-box mt-2">
+                        <button class="cart-qty-btn" onclick="changeQty(${index}, -1)">−</button>
+                        <span class="cart-qty-value">${item.qty}</span>
+                        <button class="cart-qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                    </div>
+                </div>
+                <i class="fa-solid fa-xmark cart-remove" onclick="removeItem(${index})"></i>
+            </div>
+        `;
+            });
+
+            cartSubtotal.textContent = "S/. " + subtotal.toFixed(2);
+            cartTotal.textContent = "S/. " + subtotal.toFixed(2);
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+            updateCartBadge();
+        }
+
+        function changeQty(index, amount) {
+            cart[index].qty += amount;
+            if (cart[index].qty < 1) cart[index].qty = 1;
+            updateCartUI();
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+
+        function getProductPrice() {
+            const text = document.querySelector(".product-price")
+                ?.textContent.replace("S/.", "").replace("S/", "").trim();
+
+            return parseFloat(text) || 0;
+        }
+
+
+        addToCartBtn?.addEventListener("click", () => {
+            const qty = parseInt(document.getElementById("qtyValue")?.textContent || 1);
+            const price = getProductPrice();
+
+            const product = {
+                name: document.querySelector(".product-title")?.textContent || "Producto",
+                price,
+                qty,
+                img: document.getElementById("productMainImg")?.src
+            };
+
+            cart.push(product);
+            updateCartUI();
+            cartSidebar.show();
+        });
+
+        updateCartUI();
+        updateCartBadge();
 
     </script>
+
 </body>
 
 </html>
