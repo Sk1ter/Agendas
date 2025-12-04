@@ -823,19 +823,19 @@
 
                     <div id="checkoutProducts"></div>
 
-                    <hr>
+                    <hr class="my-3">
 
                     <div class="d-flex justify-content-between">
-                        <span>Subtotal</span>
-                        <span id="checkoutSubtotal">S/. 0.00</span>
+                        <span class="fw-semibold">Subtotal</span>
+                        <span id="checkoutSubtotal" class="fw-bold">S/. 0.00</span>
                     </div>
 
-                    <div class="d-flex justify-content-between">
-                        <span>Envío</span>
-                        <span>S/. 0.00</span>
+                    <div class="d-flex justify-content-between mt-1">
+                        <span class="fw-semibold">Envío</span>
+                        <span class="fw-bold">S/. 0.00</span>
                     </div>
 
-                    <div class="d-flex justify-content-between fw-bold fs-5 mt-2 mb-3">
+                    <div class="d-flex justify-content-between fw-bold fs-4 mt-3 mb-3">
                         <span>Total</span>
                         <span id="checkoutTotal">S/. 0.00</span>
                     </div>
@@ -935,7 +935,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        /* ===================== TOPBAR + NAVBAR STICKY ===================== */
+        
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
         const topbar = document.querySelector(".topbar");
         const navbar = document.querySelector(".navbar");
 
@@ -944,7 +946,6 @@
             navbar?.classList.toggle("sticky-shadow", window.scrollY > 80);
         });
 
-        /* ===================== DROPDOWN ===================== */
         const toggle = document.querySelector(".dropdown-toggle");
         const menu = document.querySelector(".dropdown-menu");
         let isOpen = false;
@@ -960,7 +961,6 @@
             menu.classList.remove("closing");
             menu.classList.add("opening");
         }
-
         function closeMenu() {
             isOpen = false;
             menu.classList.remove("opening");
@@ -968,10 +968,11 @@
         }
 
         document.addEventListener("click", (e) => {
-            if (isOpen && !menu.contains(e.target) && !toggle.contains(e.target)) closeMenu();
+            if (isOpen && !menu.contains(e.target) && !toggle.contains(e.target)) {
+                closeMenu();
+            }
         });
 
-        /* ===================== BUSCADOR ===================== */
         const btnSearch = document.getElementById("btnSearch");
         const searchInput = document.getElementById("searchInput");
 
@@ -980,147 +981,55 @@
             searchInput.classList.toggle("show");
             if (searchInput.classList.contains("show")) searchInput.focus();
         });
-        document.addEventListener("click", () => searchInput?.classList.remove("show"));
 
-        /* ========================================================
-           CARRITO GLOBAL
-        ======================================================== */
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-        const cartSidebar = new bootstrap.Offcanvas("#cartSidebar");
-        const cartIcon = document.querySelector(".cart");
-        const addToCartBtn = document.querySelector(".add-cart-btn");
-
-        cartIcon?.addEventListener("click", () => cartSidebar.show());
-
-        /* ===================== BURBUJA DEL CARRITO ===================== */
-        function updateCartBadge() {
-            let badge = document.querySelector(".cart span");
-
-            if (!badge) {
-                const span = document.createElement("span");
-                cartIcon.appendChild(span);
-                badge = span;
-            }
-
-            const totalQty = cart.reduce((acc, item) => acc + item.qty, 0);
-
-            badge.textContent = totalQty;
-            badge.style.display = totalQty > 0 ? "flex" : "none";
-        }
-
-        /* ===================== UI DEL OFFCANVAS ===================== */
-        function updateCartUI() {
-            const cartItems = document.getElementById("cartItems");
-            const cartSubtotal = document.getElementById("cartSubtotal");
-            const cartTotal = document.getElementById("cartTotal");
-
-            if (!cartItems) return;
-
-            cartItems.innerHTML = "";
-            let subtotal = 0;
-
-            cart.forEach((item, index) => {
-                const itemSubtotal = item.qty * item.price;
-                subtotal += itemSubtotal;
-
-                cartItems.innerHTML += `
-            <div class="cart-item">
-                <img src="${item.img}">
-                <div class="cart-details">
-                    <div class="cart-title">${item.name}</div>
-                    <div class="cart-price">S/. ${item.price.toFixed(2)}</div>
-
-                    <div class="cart-qty-box mt-2">
-                        <button class="cart-qty-btn" onclick="changeQty(${index}, -1)">−</button>
-                        <span class="cart-qty-value">${item.qty}</span>
-                        <button class="cart-qty-btn" onclick="changeQty(${index}, 1)">+</button>
-                    </div>
-                </div>
-                <i class="fa-solid fa-xmark cart-remove" onclick="removeItem(${index})"></i>
-            </div>
-        `;
-            });
-
-            cartSubtotal.textContent = "S/. " + subtotal.toFixed(2);
-            cartTotal.textContent = "S/. " + subtotal.toFixed(2);
-
-            localStorage.setItem("cart", JSON.stringify(cart));
-            updateCartBadge();
-        }
-
-        /* ===================== CANTIDAD ===================== */
-        function changeQty(index, amount) {
-            cart[index].qty += amount;
-            if (cart[index].qty < 1) cart[index].qty = 1;
-            updateCartUI();
-        }
-
-        function removeItem(index) {
-            cart.splice(index, 1);
-            updateCartUI();
-        }
-
-        /* ===================== AGREGAR AL CARRITO ===================== */
-        function getProductPrice() {
-            const priceText = document.querySelector(".product-price")
-                ?.textContent.replace("S/.", "").replace("S/", "").trim();
-
-            return parseFloat(priceText) || 0;
-        }
-
-        addToCartBtn?.addEventListener("click", () => {
-            const qty = parseInt(document.getElementById("qtyValue")?.textContent || 1);
-            const price = getProductPrice();
-
-            const product = {
-                name: document.querySelector(".product-title")?.textContent || "Producto",
-                price: price,
-                qty: qty,
-                img: document.getElementById("productMainImg")?.src
-            };
-
-            cart.push(product);
-            updateCartUI();
-            cartSidebar.show();
+        document.addEventListener("click", () => {
+            searchInput?.classList.remove("show");
         });
 
-        /* ===================== CHECKOUT ===================== */
-        const checkoutProducts = document.getElementById("checkoutProducts");
-        const checkoutSubtotal = document.getElementById("checkoutSubtotal");
-        const checkoutTotal = document.getElementById("checkoutTotal");
+        function updateCartBadge() {
+            const badge = document.querySelector(".cart span");
+            const total = cart.reduce((sum, item) => sum + item.qty, 0);
 
-        function loadCheckout() {
-            if (!checkoutProducts) return;
+            badge.textContent = total;
+            badge.style.display = total > 0 ? "flex" : "none";
+        }
 
+        function renderCheckoutProducts() {
+            const container = document.getElementById("checkoutProducts");
+            const subtotalText = document.getElementById("checkoutSubtotal");
+            const totalText = document.getElementById("checkoutTotal");
+
+            if (!container) return;
+
+            container.innerHTML = "";
             let subtotal = 0;
-            checkoutProducts.innerHTML = "";
 
             cart.forEach(item => {
                 subtotal += item.price * item.qty;
 
-                checkoutProducts.innerHTML += `
+                container.innerHTML += `
             <div class="summary-product">
                 <img src="${item.img}">
                 <div>
                     <div class="summary-title">${item.name}</div>
-                    <small>${item.qty}x</small><br>
-                    <strong>S/. ${item.price.toFixed(2)}</strong>
+                    <small>Cantidad: ${item.qty}</small><br>
+                    <b>S/. ${(item.price * item.qty).toFixed(2)}</b>
                 </div>
             </div>
         `;
             });
 
-            checkoutSubtotal.textContent = "S/. " + subtotal.toFixed(2);
-            checkoutTotal.textContent = "S/. " + subtotal.toFixed(2);
+            // Actualizar valores
+            subtotalText.textContent = "S/. " + subtotal.toFixed(2);
+            totalText.textContent = "S/. " + subtotal.toFixed(2);
         }
 
-        loadCheckout();
-
-        /* ===================== AL CARGAR ===================== */
-        updateCartUI();
         updateCartBadge();
+        renderCheckoutProducts();
+
+        
     </script>
+
 
 </body>
 
